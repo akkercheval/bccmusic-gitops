@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ws-bccmusic-api
+  namespace: default
+  labels:
+    app: ws-bccmusic-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ws-bccmusic-api
+  template:
+    metadata:
+      labels:
+        app: ws-bccmusic-api
+    spec:
+      containers:
+      - name: ws-bccmusic-api
+        image: ghcr.io/akkercheval/ws-bccmusic-api:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:sqlserver://192.168.0.10:1433;databaseName=bccmusic;encrypt=false;trustServerCertificate=true"
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: password
+        resources:
+          requests:
+            cpu: 200m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 1Gi
