@@ -1,5 +1,5 @@
 global:
-  domain: argocd.bccmusic.boonecountyin.org
+  domain: argocd.boonecountyin.org
 
 crds:
   install: true
@@ -29,7 +29,7 @@ server:
   ingress:
     enabled: true
     ingressClassName: nginx
-    hostname: argocd.bccmusic.boonecountyin.org
+    hostname: argocd.boonecountyin.org
     path: /
     pathType: Prefix
     annotations:
