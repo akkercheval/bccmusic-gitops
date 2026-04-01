@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ws-bccmusic-api
-  namespace: default
+  namespace: bccmusic-api
   labels:
     app: ws-bccmusic-api
 spec:
@@ -16,7 +16,7 @@ spec:
         app: ws-bccmusic-api
     spec:
       containers:
-      - name: ws-bccmusic-api
+      - name: backend
         image: ghcr.io/akkercheval/ws-bccmusic-api:latest
         imagePullPolicy: Always
         ports:
@@ -39,5 +39,5 @@ spec:
             cpu: 200m
             memory: 512Mi
           limits:
-            cpu: 500m
+            cpu: 1000m
             memory: 1Gi

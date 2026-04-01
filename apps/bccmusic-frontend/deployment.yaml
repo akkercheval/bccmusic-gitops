@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: bccmusic-frontend
-  namespace: default
+  namespace: bccmusic-frontend
   labels:
     app: bccmusic-frontend
 spec:
@@ -16,15 +16,15 @@ spec:
         app: bccmusic-frontend
     spec:
       containers:
-      - name: bccmusic-frontend
-        image: ghcr.io/akkercheval/bccmusic-frontend:latest
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
-        resources:
-          requests:
-            cpu: 50m
-            memory: 128Mi
-          limits:
-            cpu: 200m
-            memory: 256Mi
+        - name: frontend
+          image: ghcr.io/akkercheval/bccmusic-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
