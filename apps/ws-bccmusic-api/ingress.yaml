@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: api.bccmusic.boonecountyin.org
+    - host: api-bccmusic.boonecountyin.org
       http:
         paths:
           - path: /
