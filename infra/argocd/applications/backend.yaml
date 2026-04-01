@@ -4,7 +4,7 @@ metadata:
   name: ws-bccmusic-api
   namespace: argocd
   finalizers:
-    - resources-finalizer.argocd.argoproj.io # Allows clean deletion if needed
+    - argoproj.io/resources-finalizer
 spec:
   project: default
   source:
@@ -20,4 +20,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-      - ServerSideApply=true # Helps with CRDs / complex resources
+      - ServerSideApply=true
