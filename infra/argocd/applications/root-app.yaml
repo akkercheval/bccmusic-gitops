@@ -1,17 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bccmusic-frontend
+  name: bccmusic-root
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: https://github.com/akkercheval/bccmusic-gitops.git
     targetRevision: main
-    path: apps/bccmusic-frontend
+    path: infra/argocd/applications
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
