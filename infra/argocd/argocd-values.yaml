@@ -1,0 +1,65 @@
+global:
+  domain: argocd.bccmusic.boonecountyin.org
+
+crds:
+  install: true
+
+# Lightweight single-node tuning
+controller:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+
+server:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 300m
+      memory: 768Mi
+
+  # Enable ingress with nginx + SSL passthrough (critical for Argo CD gRPC + UI)
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hostname: argocd.bccmusic.boonecountyin.org
+    path: /
+    pathType: Prefix
+    annotations:
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+      # Optional: backend-protocol if you hit redirect loops
+      # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    tls: true
+
+repoServer:
+  replicas: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 300m
+      memory: 512Mi
+
+redis:
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+# Disable some extras for homelab
+dex:
+  enabled: false # unless you need OIDC right away
+notifications:
+  enabled: false
