@@ -23,7 +23,7 @@ spec:
         - containerPort: 8080
         env:
         - name: SPRING_DATASOURCE_URL
-          value: "jdbc:sqlserver://192.168.0.10:1433;databaseName=bccmusic;encrypt=false;trustServerCertificate=true"
+          value: "jdbc:sqlserver://192.168.0.10:1433;databaseName=bccmusic;encrypt=false;trustServerCertificate=true";integratedSecurity=false"
         - name: SPRING_DATASOURCE_USERNAME
           valueFrom:
             secretKeyRef:

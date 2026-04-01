@@ -8,13 +8,13 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: bccmusic.boonecountyin.org     # Change to your actual subdomain
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: ws-bccmusic-api
-            port:
-              number: 8080
+    - host: bccmusic.boonecountyin.org
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ws-bccmusic-api
+                port:
+                  number: 8080
