@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: ws-bccmusic-api
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io # Allows clean deletion if needed
 spec:
   project: default
   source:
@@ -11,10 +13,11 @@ spec:
     path: apps/ws-bccmusic-api
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: bccmusic-api
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true # Helps with CRDs / complex resources
