@@ -1,0 +1,4 @@
+# Plain text secrets - never commit these
+db-credentials.yaml
+*.env
+secrets/plain-*.yaml
