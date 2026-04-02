@@ -1,35 +1,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: bccmusic-frontend
-  namespace: bccmusic-frontend
+  name: bccmusic-api
+  namespace: bccmusic-api
   annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-    # Required to strip /api prefix before sending to backend
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
   rules:
     - host: api-bccmusic.boonecountyin.org
       http:
         paths:
-          # API path – must come BEFORE the catch-all /
-          # This strips /api so /api/login becomes /login on the backend
-          - path: /api(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: ws-bccmusic-api # ← Confirm this is the exact name of your backend Service
-                port:
-                  number: 8080 # ← Confirm this matches your backend Service port
-
-          # Catch-all for the React frontend (static files + client-side routing)
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: bccmusic-frontend
+                name: ws-bccmusic-api
                 port:
-                  number: 80
+                  number: 8080
