@@ -23,26 +23,34 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
-          # === LIVENESS AND READINESS PROBES ===
           livenessProbe:
             httpGet:
-              path: /actuator/health/liveness # Spring Boot Actuator endpoint
+              path: /actuator/health/liveness
               port: 8080
-            initialDelaySeconds: 30
-            periodSeconds: 10
+            initialDelaySeconds: 60
+            periodSeconds: 120 # was 10s
             timeoutSeconds: 5
             failureThreshold: 3
             successThreshold: 1
           readinessProbe:
             httpGet:
-              path: /actuator/health/readiness # Spring Boot Actuator endpoint
+              path: /actuator/health/readiness
               port: 8080
-            initialDelaySeconds: 10
-            periodSeconds: 5
+            initialDelaySeconds: 20
+            periodSeconds: 600 # was 10s
             timeoutSeconds: 3
             failureThreshold: 3
             successThreshold: 1
+          startupProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            failureThreshold: 30
+            periodSeconds: 10
+
           env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:sqlserver://192.168.0.10:1433;databaseName=BCCMmusic;encrypt=true;trustServerCertificate=true;"
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -55,6 +63,11 @@ spec:
                   key: password
             - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
               value: "health,info,prometheus"
+            # === Suppress actuator health-check logging ===
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_BOOT_ACTUATE
+              value: "ERROR"
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
+              value: "WARN" # catches any request-filter noise
           resources:
             requests:
               cpu: 200m
