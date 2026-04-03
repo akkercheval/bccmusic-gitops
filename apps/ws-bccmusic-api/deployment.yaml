@@ -15,12 +15,12 @@ spec:
       labels:
         app: ws-bccmusic-api
       annotations:
-        redeploy: "2026-04-02-v1"
+        redeploy: "2026-04-03-v1"
     spec:
       containers:
         - name: backend
-          image: ghcr.io/akkercheval/ws-bccmusic-api:latest
-          imagePullPolicy: Always
+          image: ghcr.io/akkercheval/ws-bccmusic-api:${GIT_COMMIT_SHA}
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
           # === LIVENESS AND READINESS PROBES ===
