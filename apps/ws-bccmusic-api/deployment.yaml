@@ -14,6 +14,8 @@ spec:
     metadata:
       labels:
         app: ws-bccmusic-api
+      annotations:
+        redeploy: "2026-04-02-v1"
     spec:
       containers:
         - name: backend
@@ -21,9 +23,28 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
+          # === LIVENESS AND READINESS PROBES ===
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness # Spring Boot Actuator endpoint
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+            successThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness # Spring Boot Actuator endpoint
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+            successThreshold: 1
           env:
             - name: SPRING_DATASOURCE_URL
-              value: "jdbc:sqlserver://192.168.0.10:1433;databaseName=bccmusic;encrypt=false;trustServerCertificate=true;integratedSecurity=false"
+              value: "jdbc:sqlserver://192.168.0.10:1433;databaseName=BCCMmusic;encrypt=true;trustServerCertificate=true;"
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -34,8 +55,8 @@ spec:
                 secretKeyRef:
                   name: db-credentials
                   key: password
-            - name: SPRING_JPA_HIBERNATE_DDL_AUTO
-              value: "update"
+            - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+              value: "health,info,prometheus"
           resources:
             requests:
               cpu: 200m
@@ -43,3 +64,7 @@ spec:
             limits:
               cpu: 1000m
               memory: 1Gi
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "sleep 10"]
