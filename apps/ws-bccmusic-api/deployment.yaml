@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/akkercheval/ws-bccmusic-api:main
+          image: ghcr.io/akkercheval/ws-bccmusic-api:ecb39e9
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
