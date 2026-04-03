@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/akkercheval/ws-bccmusic-api:${GIT_COMMIT_SHA}
+          image: ghcr.io/akkercheval/ws-bccmusic-api:main
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
