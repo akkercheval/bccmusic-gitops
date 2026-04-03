@@ -43,8 +43,6 @@ spec:
             failureThreshold: 3
             successThreshold: 1
           env:
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:sqlserver://192.168.0.10:1433;databaseName=BCCMusic;encrypt=true;trustServerCertificate=true;"
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
