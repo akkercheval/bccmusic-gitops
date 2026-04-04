@@ -14,12 +14,13 @@ spec:
     metadata:
       labels:
         app: bccmusic-frontend
+      annotations:
+        redeploy: "2026-04-04-v1"
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/akkercheval/bccmusic-frontend:sha-b35b961cef1d7cd235eb69c311486b23fe61a038
+          image: ghcr.io/akkercheval/bccmusic-frontend:main
           imagePullPolicy: Always
-            # Auto-updated by CI on b35b961cef1d7cd235eb69c311486b23fe61a038
           ports:
             - containerPort: 80
           resources:
@@ -29,3 +30,21 @@ spec:
             limits:
               cpu: 500m
               memory: 512Mi
+          # === Optional but recommended for a React frontend ===
+          # Add these if your app sometimes needs time to start or to handle graceful shutdown
+          # livenessProbe:
+          #   httpGet:
+          #     path: /          # or /index.html if you prefer
+          #     port: 80
+          #   initialDelaySeconds: 30
+          #   periodSeconds: 30
+          #   timeoutSeconds: 5
+          #   failureThreshold: 3
+          # readinessProbe:
+          #   httpGet:
+          #     path: /          # or a health endpoint if your frontend has one
+          #     port: 80
+          #   initialDelaySeconds: 10
+          #   periodSeconds: 30
+          #   timeoutSeconds: 3
+          #   failureThreshold: 3
