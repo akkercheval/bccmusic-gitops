@@ -19,8 +19,9 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/akkercheval/bccmusic-frontend:main
+          image: ghcr.io/akkercheval/bccmusic-frontend:sha-b500dc3c66fe13442877211fb1946e7276084feb
           imagePullPolicy: Always
+            # Auto-updated by CI on b500dc3c66fe13442877211fb1946e7276084feb
           ports:
             - containerPort: 80
           resources:
