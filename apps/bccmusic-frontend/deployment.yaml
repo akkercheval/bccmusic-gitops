@@ -19,8 +19,9 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ghcr.io/akkercheval/bccmusic-frontend:main
+          image: ghcr.io/akkercheval/bccmusic-frontend:sha-e6f1759
           imagePullPolicy:
+            # Auto-updated by CI - commit e6f175988b499d856ce0648c20cabd98e427a8b8 (short: sha-e6f1759)
             Always
             # Auto-updated by CI - commit 7d79948c346857aa2282d214cc6c846fe481cac0 (short: sha-7d79948)
             # Auto-updated by CI - commit 27c4e2c9972e10d2d3f9041ef9c2d721092f5446 (short: sha-27c4e2c)
