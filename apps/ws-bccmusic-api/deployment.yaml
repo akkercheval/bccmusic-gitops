@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ghcr.io/akkercheval/ws-bccmusic-api:sha-e7c80cd813f03e5b73862f1edf933ded400c25f7
+          image: ghcr.io/akkercheval/ws-bccmusic-api:sha-f3a3e089c67a54a780817fcb72345bd85a7975c8
           imagePullPolicy:
             Always
             # Auto-updated by CI on 9bb36785eb44e4a8546df7fd583c595e9f86902f (build #29)
